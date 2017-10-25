@@ -6,7 +6,7 @@ import modalReducer from "./pf-lib/modal/modalReducer";
 
 export default createStore(
   combineReducers({
-    modalReducer,
+    modalReducer, // This store is needed by the modal utility
     messageReducer,
   }),
     applyMiddleware(thunk)
