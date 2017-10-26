@@ -1,9 +1,20 @@
 import React, { Component } from "react";
+import { setMessageWithTimeout } from '../pf-lib/message/messageActions.js'
+import PropTypes from "prop-types";
+import { connect } from 'react-redux';
 
 export class main_page extends Component {
+  static get propTypes(){
+    return {
+      setMessageWithTimeout: PropTypes.func,
+    }
+  }
 
   render() {
-    let pageContent = <p>This is the first page!</p>;
+    const onClickHandler = () => {
+      this.props.setMessageWithTimeout('You pressed a button.', 'success')
+    };
+
     return (
       <div className="col col-cards-pf container-cards-pf fader">
         <div className="cards col-xs-10 col-md-8 ">
@@ -13,7 +24,9 @@ export class main_page extends Component {
                 Main Page!
               </h2>
               <div className="card-pf-footer">
-                {pageContent}
+                <button className="btn btn-primary m-r-8" onClick={onClickHandler}>
+                  Click me!
+                </button>
               </div>
             </div>
           </div>
@@ -21,8 +34,14 @@ export class main_page extends Component {
       </div>
     )
   }
-
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMessageWithTimeout: (msg, status) => {
+      dispatch(setMessageWithTimeout(msg, status))
+    },
+  }
+};
 
-export default main_page
+export default connect(null, mapDispatchToProps)(main_page);
