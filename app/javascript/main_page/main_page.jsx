@@ -17,7 +17,6 @@ export class main_page extends Component {
       donutChartTitle.insert('tspan').text("950").classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
       donutChartTitle.insert('tspan').text("MHz Used").classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0);
     };
-
     return (
       <div className="col col-cards-pf container-cards-pf fader">
         <div className="cards col-xs-10 col-md-8 ">
@@ -39,8 +38,8 @@ export class main_page extends Component {
       </div>
     )
   }
-
 }
 
 
 export default main_page
+
