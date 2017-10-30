@@ -18,8 +18,9 @@ export class main_page extends Component {
                 C3 Charts Example
               </h2>
               <div className="card-pf-footer row">
-                <h4> Line Chart Example: </h4>
-                <div className="col-sm-4 ">
+                <div className="col-sm-offset-4 col-sm-4 ">
+                  <h4> Line Chart Example: </h4>
+                  {/* Chart component takes the element and config as a prop */}
                   <ChartComponent element='chart-pf-sparkline' config={config}/>
                 </div>
               </div>
