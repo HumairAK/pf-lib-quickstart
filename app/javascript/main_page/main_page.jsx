@@ -1,40 +1,100 @@
 import React, { Component } from "react";
-import { CHART_CONFIG } from './chartData.js';
 import ChartComponent from '../pf-lib/c3Charts/chart.jsx';
-
+import { CONF } from './chartData.js';
 
 export class main_page extends Component {
   render() {
-    // Build config for donut chart
-    let defaultConfig = $().c3ChartDefaults().getDefaultDonutConfig();
-    let donutConfig =  {...defaultConfig, ...CHART_CONFIG.donut};
-
-    // This call back will be invoked once the donut chart is generated
-    let generateCallback = () =>
-    {
-      let donutChartTitle = d3.select("#chart-pf-donut").select('text.c3-chart-arcs-title');
-      donutChartTitle.text("");
-      donutChartTitle.insert('tspan').text("950").classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
-      donutChartTitle.insert('tspan').text("MHz Used").classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0);
-    };
     return (
-      <div className="col col-cards-pf container-cards-pf fader">
-        <div className="cards col-xs-10 col-md-8 ">
-          <div className="card-pf card-pf-accented">
-            <div className="card-pf-heading c">
+      <div className="container-fluid containers-cards-pf">
+
+
+        <div className="row row-cards-pf">
+          <div className="col-xs-6 col-md-3">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
               <h2 className="card-pf-title">
-                C3 Charts Example
+                <span className="fa fa-shield"/>
+                Line Chart
               </h2>
-              <div className="card-pf-footer row">
-                <div className="col-sm-offset-4 col-sm-4 ">
-                  <h4> Donut Chart Example: </h4>
-                  {/* Chart component can also take a callback that is invoked once the chart is generated */}
-                  <ChartComponent element='chart-pf-donut' config={donutConfig} generateCallback={generateCallback}/>
-                </div>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-1' config={CONF.line1.config}/>
+              </div>
+            </div>
+          </div>
+          <div className="col-xs-6 col-md-3">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
+              <h2 className="card-pf-title">
+                <span className="fa fa-shield"/>
+                Line Chart
+              </h2>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-2' config={CONF.line2.config} generateCallback={CONF.line2.callback}/>
+              </div>
+            </div>
+          </div>
+          <div className="col-xs-6 col-md-3">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
+              <h2 className="card-pf-title">
+                <span className="fa fa-shield"/>
+                Donut Chart
+              </h2>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-3' config={CONF.donut1.config} generateCallback={CONF.donut1.callback}/>
+              </div>
+            </div>
+          </div>
+          <div className="col-xs-6 col-md-3">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
+              <h2 className="card-pf-title">
+                <span className="fa fa-shield"/>
+                Vertical Bar Chart
+              </h2>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-4' config={CONF.vBarChart.config}/>
               </div>
             </div>
           </div>
         </div>
+
+        <div className="row row-cards-pf">
+          <div className="col-xs-12 col-md-6">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
+              <h2 className="card-pf-title">
+                <span className="fa fa-shield"/>
+                Grouped Vertical Bar Chart
+              </h2>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-5' config={CONF.groupedVBarChart.config}/>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-xs-6 col-md-3">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
+              <h2 className="card-pf-title">
+                <span className="fa fa-shield"/>
+                Horizontal Bar Chart
+              </h2>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-6' config={CONF.hBarChart.config}/>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-xs-6 col-md-3">
+            <div className="card-pf card-pf-accented card-pf-aggregate-status">
+              <h2 className="card-pf-title">
+                <span className="fa fa-shield"/>
+                Grouped Horizontal Bar Chart
+              </h2>
+              <div className="card-pf-body">
+                <ChartComponent element='chart-ex-7' config={CONF.groupedHBarChart.config}/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
       </div>
     )
   }
