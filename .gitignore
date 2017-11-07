@@ -1,9 +1,6 @@
 #dist directory (webpack files)
 app/backend/static/build/
 
-#submodule
-app/javascript/pf-lib/
-
 #InteliJ
 .idea
 
