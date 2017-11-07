@@ -1,5 +1,6 @@
 const HEIGHT = 200;
 const WIDTH = 300;
+const SIZE = {height: HEIGHT, width: WIDTH};
 const CHART_URLS = [
   'https://www.google.com',
   'https://www.yahoo.com',
@@ -12,10 +13,7 @@ const CATEGORIES = ['Q1', 'Q2', 'Q3', 'Q4'];
 const line1 = {
   config: {
     bindto: "#chart-ex-1",
-    size: {
-      height: HEIGHT,
-      width: WIDTH,
-    },
+    size: SIZE,
     data:  {
       columns: [
         ['%', 10, 50, 28, 20, 31, 27, 60, 36, 52, 55, 62, 68, 69, 88, 74, 88, 95],
@@ -29,10 +27,7 @@ const line1 = {
 const line2 = {
   config: {
     bindto: '#chart-ex-2',
-    size: {
-      height: HEIGHT,
-      width: WIDTH,
-    },
+    size: SIZE,
     data: {
       columns: [
         ['data1', 30, 200, 100, 400, 150, 250],
@@ -67,14 +62,28 @@ const line2 = {
 };
 
 /* ======================== Donut charts ======================== */
-const donut1 = {
+
+let donutData = {
+  type : 'donut',
+  colors: {
+    Cats: $.pfPaletteColors.blue,
+    Hamsters: $.pfPaletteColors.green,
+    Fish: $.pfPaletteColors.orange,
+    Dogs: $.pfPaletteColors.red
+  },
+  columns: [
+    ['Dogs', 2],
+    ['Cats', 2],
+    ['Fish', 3],
+    ['Hamsters', 1]
+  ],
+};
+
+const donutGeneric = {
   config: {
     ...$().c3ChartDefaults().getDefaultDonutConfig(),
-    size: {
-      height: HEIGHT,
-      width: WIDTH,
-    },
-    bindto: '#chart-ex-3',
+    size: SIZE,
+    bindto: '#chart-ex-donut-1',
     data: {
       type: "donut",
       columns: [
@@ -99,10 +108,61 @@ const donut1 = {
   },
   callback: () =>
   {
-    let donutChartTitle = d3.select("#chart-ex-3").select('text.c3-chart-arcs-title');
+    let donutChartTitle = d3.select("#chart-ex-donut-1").select('text.c3-chart-arcs-title');
     donutChartTitle.text("");
     donutChartTitle.insert('tspan').text("950").classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
     donutChartTitle.insert('tspan').text("Mhz Used").classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0);
+  },
+};
+
+const donutChartNoLegend = {
+  config: {
+    ...$().c3ChartDefaults().getDefaultDonutConfig(),
+    size: SIZE,
+    bindto: '#chart-ex-donut-2',
+    tooltip: {
+      contents: $().pfDonutTooltipContents
+    },
+    data: donutData,
+  },
+  callback: () => {$().pfSetDonutChartTitle("#chart-ex-donut-2", "8", "Animals");},
+};
+
+const donutChartRightConfig = {
+  config: {
+    ...$().c3ChartDefaults().getDefaultDonutConfig(),
+    size: SIZE,
+    bindto: '#chart-ex-donut-3',
+    tooltip: {
+      contents: $().pfDonutTooltipContents
+    },
+    data: donutData,
+    legend : {
+      show: true,
+      position: 'right'
+    },
+  },
+  callback: () => {
+    $().pfSetDonutChartTitle("#chart-ex-donut-3", "8", "Animals");
+    },
+};
+
+const donutChartBottomConfig = {
+  config: {
+    ...$().c3ChartDefaults().getDefaultDonutConfig(),
+    size: SIZE,
+    bindto: '#chart-ex-donut-4',
+    tooltip: {
+      contents: $().pfDonutTooltipContents
+    },
+    data: donutData,
+    legend : {
+      show: true,
+      position: 'bottom'
+    },
+  },
+  callback: () => {
+    $().pfSetDonutChartTitle("#chart-ex-donut-4", "8", "Animals");
   },
 };
 
@@ -110,10 +170,7 @@ const donut1 = {
 const vBarChart = {
   config: {
     ...$().c3ChartDefaults().getDefaultBarConfig(CATEGORIES),
-    size: {
-      height: HEIGHT,
-      width: WIDTH,
-    },
+    size: SIZE,
     bindto: "#chart-ex-4",
     axis: {
       x: {
@@ -138,6 +195,7 @@ const vBarChart = {
 const groupedVBarChart = {
   config: {
     ...$().c3ChartDefaults().getDefaultGroupedBarConfig(),
+    size: SIZE,
     bindto: '#chart-ex-5',
     axis: {
       x: {
@@ -174,6 +232,7 @@ const groupedVBarChart = {
 const hBarChart = {
   config: {
     ...$().c3ChartDefaults().getDefaultBarConfig(CATEGORIES),
+    size: SIZE,
     bindto: '#chart-ex-6',
     axis: {
       rotated: true,
@@ -202,6 +261,7 @@ const hBarChart = {
 const groupedHBarChart = {
   config: {
     ...$().c3ChartDefaults().getDefaultGroupedBarConfig(),
+    size: SIZE,
     bindto: '#chart-ex-7',
     axis: {
       rotated: true,
@@ -235,7 +295,95 @@ const groupedHBarChart = {
   callback: null,
 };
 
+/* ======================== Stacked bar charts ======================== */
+
+const stackedVBarChart = {
+  config: {
+    ...$().c3ChartDefaults().getDefaultStackedBarConfig(),
+    size: SIZE,
+    bindto: '#chart-ex-8',
+    axis: {
+      x: {
+        categories: ['2013', '2014', '2015'],
+        type: 'category'
+      }
+    },
+    data: {
+      type: 'bar',
+      order: null,
+      groups: [['Q1', 'Q2', 'Q3', 'Q4']],
+      columns: [
+        ['Q1', 400, 250, 375],
+        ['Q2', 355, 305, 300],
+        ['Q3', 315, 340, 276],
+        ['Q4', 180, 390, 190]
+      ],
+      // optional drilldown behavior
+      onclick: function (d) {
+        window.location = CHART_URLS[d.index];
+      }
+    },
+    color: {
+      pattern: [
+        $.pfPaletteColors.red,
+        $.pfPaletteColors.blue,
+        $.pfPaletteColors.orange,
+        $.pfPaletteColors.green
+      ]
+    },
+  },
+  callback: null,
+};
+
+const stackedHBarChart = {
+  config: {
+    ...$().c3ChartDefaults().getDefaultStackedBarConfig(),
+    size: SIZE,
+    bindto: '#chart-ex-9',
+    axis: {
+      rotated: true,
+      x: {
+        categories: ['2013', '2014', '2015'],
+        type: 'category'
+      }
+    },
+    data: {
+      type: 'bar',
+      order: null,
+      groups: [['Q1', 'Q2', 'Q3', 'Q4']],
+      columns: [
+        ['Q1', 400, 250, 375],
+        ['Q2', 355, 305, 300],
+        ['Q3', 315, 340, 276],
+        ['Q4', 180, 390, 190]
+      ],
+      // optional drilldown behavior
+      onclick: function (d) {
+        window.location = CHART_URLS[d.index];
+      }
+    },
+    color: {
+      pattern: [
+        $.pfPaletteColors.red,
+        $.pfPaletteColors.blue,
+        $.pfPaletteColors.orange,
+        $.pfPaletteColors.green
+      ]
+    },
+  },
+  callback: null,
+};
+
+/* ======================== Heat Map  ======================== */
+
+
+
+
+/* ======================== Config End  ======================== */
+
 export const CONF = {
-  donut1, line1, line2, vBarChart, groupedVBarChart, hBarChart, groupedHBarChart
+  donutGeneric, line1, line2, vBarChart, groupedVBarChart,
+  hBarChart, groupedHBarChart, stackedVBarChart, stackedHBarChart,
+  donutChartNoLegend, donutChartRightConfig, donutChartBottomConfig
 };
 

@@ -6,8 +6,10 @@ app = Flask(__name__)
 
 
 @app.route("/")
-@app.route("/listView")
-@app.route("/emptyState")
+@app.route("/barCharts")
+@app.route("/donutCharts")
+@app.route("/heatMaps")
+@app.route("/misc")
 def home():
     return render_template('index.html')
 
